@@ -19,8 +19,8 @@
   <layout class="QGridLayout" name="gridLayout_4">
    <item row="0" column="2">
     <layout class="QGridLayout" name="gridLayout_3">
-     <item row="14" column="4">
-      <widget class="QLineEdit" name="tcp_source_port_2"/>
+     <item row="12" column="8">
+      <widget class="QLineEdit" name="code_2"/>
      </item>
      <item row="19" column="8" alignment="Qt::AlignLeft">
       <widget class="QLineEdit" name="size_2">
@@ -32,8 +32,8 @@
        </property>
       </widget>
      </item>
-     <item row="12" column="8">
-      <widget class="QLineEdit" name="code_2"/>
+     <item row="14" column="4">
+      <widget class="QLineEdit" name="tcp_source_port_2"/>
      </item>
      <item row="6" column="1">
       <widget class="QLabel" name="label_8">
@@ -51,6 +51,9 @@
         <cstring>version_2</cstring>
        </property>
       </widget>
+     </item>
+     <item row="8" column="3" colspan="3">
+      <widget class="QLineEdit" name="header_length_2"/>
      </item>
      <item row="1" column="8">
       <widget class="QLabel" name="label_3">
@@ -72,13 +75,16 @@
        </property>
       </widget>
      </item>
-     <item row="8" column="3" colspan="3">
-      <widget class="QLineEdit" name="header_length_2"/>
+     <item row="19" column="3" colspan="2">
+      <widget class="QLineEdit" name="udp_source_port_2"/>
      </item>
-     <item row="2" column="1" colspan="3">
-      <widget class="QLabel" name="label_5">
+     <item row="3" column="4">
+      <widget class="QLineEdit" name="source_mac_2"/>
+     </item>
+     <item row="18" column="1">
+      <widget class="QLabel" name="label_24">
        <property name="text">
-        <string>Ethernet Frame Data :</string>
+        <string>UDP Data :</string>
        </property>
       </widget>
      </item>
@@ -92,26 +98,10 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="4">
-      <widget class="QLineEdit" name="source_mac_2"/>
-     </item>
-     <item row="19" column="3" colspan="2">
-      <widget class="QLineEdit" name="udp_source_port_2"/>
-     </item>
-     <item row="18" column="1">
-      <widget class="QLabel" name="label_24">
+     <item row="2" column="1" colspan="3">
+      <widget class="QLabel" name="label_5">
        <property name="text">
-        <string>UDP Data :</string>
-       </property>
-      </widget>
-     </item>
-     <item row="19" column="7" alignment="Qt::AlignRight">
-      <widget class="QLabel" name="size">
-       <property name="text">
-        <string>Size :</string>
-       </property>
-       <property name="buddy">
-        <cstring>size_2</cstring>
+        <string>Ethernet Frame Data :</string>
        </property>
       </widget>
      </item>
@@ -125,9 +115,6 @@
        </property>
       </widget>
      </item>
-     <item row="16" column="4" colspan="4">
-      <widget class="QLineEdit" name="sequence_2"/>
-     </item>
      <item row="14" column="1" colspan="2" alignment="Qt::AlignRight">
       <widget class="QLabel" name="tcp_source_port">
        <property name="text">
@@ -135,6 +122,39 @@
        </property>
        <property name="buddy">
         <cstring>tcp_source_port_2</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="19" column="7" alignment="Qt::AlignRight">
+      <widget class="QLabel" name="size">
+       <property name="text">
+        <string>Size :</string>
+       </property>
+       <property name="buddy">
+        <cstring>size_2</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="16" column="4" colspan="4">
+      <widget class="QLineEdit" name="sequence_2"/>
+     </item>
+     <item row="11" column="1">
+      <widget class="QLabel" name="label_15">
+       <property name="text">
+        <string>ICMP Data :</string>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="2" colspan="5">
+      <widget class="QLineEdit" name="ttl_2"/>
+     </item>
+     <item row="7" column="8" alignment="Qt::AlignRight">
+      <widget class="QLabel" name="protocol">
+       <property name="text">
+        <string>Protocol :</string>
+       </property>
+       <property name="buddy">
+        <cstring>protocol_2</cstring>
        </property>
       </widget>
      </item>
@@ -148,16 +168,6 @@
        </property>
       </widget>
      </item>
-     <item row="11" column="1">
-      <widget class="QLabel" name="label_15">
-       <property name="text">
-        <string>ICMP Data :</string>
-       </property>
-      </widget>
-     </item>
-     <item row="9" column="2" colspan="5">
-      <widget class="QLineEdit" name="ttl_2"/>
-     </item>
      <item row="9" column="8" colspan="3" alignment="Qt::AlignRight">
       <widget class="QLabel" name="destination_ip">
        <property name="text">
@@ -168,23 +178,13 @@
        </property>
       </widget>
      </item>
-     <item row="7" column="8" alignment="Qt::AlignRight">
-      <widget class="QLabel" name="protocol">
+     <item row="8" column="1" colspan="2">
+      <widget class="QLabel" name="header_length">
        <property name="text">
-        <string>Protocol :</string>
+        <string>Header Length :</string>
        </property>
        <property name="buddy">
-        <cstring>protocol_2</cstring>
-       </property>
-      </widget>
-     </item>
-     <item row="8" column="8" colspan="2" alignment="Qt::AlignRight">
-      <widget class="QLabel" name="source_ip">
-       <property name="text">
-        <string>Source IP :</string>
-       </property>
-       <property name="buddy">
-        <cstring>source_ip_2</cstring>
+        <cstring>header_length_2</cstring>
        </property>
       </widget>
      </item>
@@ -201,33 +201,16 @@
      <item row="12" column="3" colspan="4">
       <widget class="QLineEdit" name="type_2"/>
      </item>
-     <item row="8" column="1" colspan="2">
-      <widget class="QLabel" name="header_length">
-       <property name="text">
-        <string>Header Length :</string>
-       </property>
-       <property name="buddy">
-        <cstring>header_length_2</cstring>
-       </property>
-      </widget>
-     </item>
      <item row="4" column="4">
       <widget class="QLineEdit" name="destination_mac_2"/>
      </item>
-     <item row="14" column="8" colspan="3" alignment="Qt::AlignRight">
-      <widget class="QLabel" name="acknowledgment">
+     <item row="8" column="8" colspan="2" alignment="Qt::AlignRight">
+      <widget class="QLabel" name="source_ip">
        <property name="text">
-        <string>Acknowledgment :</string>
+        <string>Source IP :</string>
        </property>
        <property name="buddy">
-        <cstring>acknowledgment_2</cstring>
-       </property>
-      </widget>
-     </item>
-     <item row="13" column="1">
-      <widget class="QLabel" name="label_19">
-       <property name="text">
-        <string>TCP Data :</string>
+        <cstring>source_ip_2</cstring>
        </property>
       </widget>
      </item>
@@ -241,6 +224,16 @@
        </property>
       </widget>
      </item>
+     <item row="14" column="8" colspan="3" alignment="Qt::AlignRight">
+      <widget class="QLabel" name="acknowledgment">
+       <property name="text">
+        <string>Acknowledgment :</string>
+       </property>
+       <property name="buddy">
+        <cstring>acknowledgment_2</cstring>
+       </property>
+      </widget>
+     </item>
      <item row="12" column="7">
       <widget class="QLabel" name="code">
        <property name="text">
@@ -251,18 +244,18 @@
        </property>
       </widget>
      </item>
+     <item row="13" column="1">
+      <widget class="QLabel" name="label_19">
+       <property name="text">
+        <string>TCP Data :</string>
+       </property>
+      </widget>
+     </item>
      <item row="15" column="4">
       <widget class="QLineEdit" name="tcp_destination_port_2"/>
      </item>
-     <item row="16" column="1" colspan="3" alignment="Qt::AlignRight">
-      <widget class="QLabel" name="sequence">
-       <property name="text">
-        <string>Sequence :</string>
-       </property>
-       <property name="buddy">
-        <cstring>sequence_2</cstring>
-       </property>
-      </widget>
+     <item row="7" column="2" colspan="4">
+      <widget class="QLineEdit" name="version_2"/>
      </item>
      <item row="19" column="1" colspan="2" alignment="Qt::AlignRight">
       <widget class="QLabel" name="udp_source_port">
@@ -290,31 +283,18 @@
        </property>
       </spacer>
      </item>
-     <item row="7" column="2" colspan="4">
-      <widget class="QLineEdit" name="version_2"/>
-     </item>
-     <item row="22" column="1" alignment="Qt::AlignLeft">
-      <widget class="QLabel" name="data">
+     <item row="16" column="1" colspan="3" alignment="Qt::AlignRight">
+      <widget class="QLabel" name="sequence">
        <property name="text">
-        <string>Data :</string>
+        <string>Sequence :</string>
        </property>
        <property name="buddy">
-        <cstring>data_2</cstring>
+        <cstring>sequence_2</cstring>
        </property>
       </widget>
      </item>
-     <item row="23" column="1" colspan="11">
-      <widget class="QPlainTextEdit" name="data_2">
-       <property name="minimumSize">
-        <size>
-         <width>300</width>
-         <height>300</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item row="21" column="1">
-      <spacer name="verticalSpacer_9">
+     <item row="17" column="1">
+      <spacer name="verticalSpacer_8">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
@@ -322,19 +302,6 @@
         <size>
          <width>20</width>
          <height>40</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="9" column="0">
-      <spacer name="horizontalSpacer_3">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
         </size>
        </property>
       </spacer>
@@ -352,8 +319,8 @@
        </property>
       </spacer>
      </item>
-     <item row="17" column="1">
-      <spacer name="verticalSpacer_8">
+     <item row="21" column="1">
+      <spacer name="verticalSpacer_9">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
        </property>
@@ -378,7 +345,40 @@
        </property>
       </spacer>
      </item>
-     <item row="12" column="11">
+     <item row="22" column="1" alignment="Qt::AlignLeft">
+      <widget class="QLabel" name="data">
+       <property name="text">
+        <string>Data :</string>
+       </property>
+       <property name="buddy">
+        <cstring>data_2</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="23" column="1" colspan="11">
+      <widget class="QPlainTextEdit" name="data_2">
+       <property name="minimumSize">
+        <size>
+         <width>300</width>
+         <height>300</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="0">
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="12" column="11" alignment="Qt::AlignRight">
       <widget class="QLabel" name="checksum">
        <property name="text">
         <string>Checksum :</string>
@@ -391,17 +391,40 @@
      <item row="12" column="12" colspan="2">
       <widget class="QLineEdit" name="checksum_2"/>
      </item>
-     <item row="7" column="9" colspan="4">
-      <widget class="QLineEdit" name="protocol_2"/>
-     </item>
-     <item row="8" column="10" colspan="3">
-      <widget class="QLineEdit" name="source_ip_2"/>
-     </item>
-     <item row="9" column="11" colspan="2">
-      <widget class="QLineEdit" name="destination_ip_2"/>
-     </item>
      <item row="14" column="11" colspan="2">
       <widget class="QLineEdit" name="acknowledgment_2"/>
+     </item>
+     <item row="7" column="9" colspan="3">
+      <widget class="QLineEdit" name="protocol_2"/>
+     </item>
+     <item row="3" column="11">
+      <widget class="QLineEdit" name="etherent_protocol_2"/>
+     </item>
+     <item row="8" column="10" colspan="2">
+      <widget class="QLineEdit" name="source_ip_2"/>
+     </item>
+     <item row="9" column="11">
+      <widget class="QLineEdit" name="destination_ip_2"/>
+     </item>
+     <item row="3" column="8" alignment="Qt::AlignRight">
+      <widget class="QLabel" name="etherent_protocol">
+       <property name="text">
+        <string>Ethernet Protocol :</string>
+       </property>
+      </widget>
+     </item>
+     <item row="24" column="1">
+      <spacer name="verticalSpacer_10">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </item>

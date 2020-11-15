@@ -1,7 +1,6 @@
 import struct
 import socket
 import textwrap
-import packetsniff2 as UiClass
 
 
 TAB_1 = '  - '
@@ -137,9 +136,9 @@ class FormattedData():
 
 class Sniffer():
 
-    def __init__(self,protocolList, UI):
+    def __init__(self,protocolList, IP):
         self.protocolList = protocolList
-        self.UI = UI
+        self.IP = IP
         self.status = 0
 
 
@@ -168,7 +167,10 @@ class Sniffer():
             version, header_length, ttl, proto, src, target, data = self.ipv4_packet(data)
             self.newDataHolder.addIPv4Data(version, header_length, ttl, proto, src, target)
             #printIPv4
+            if self.IP != "" and self.IP != str(src) or self.IP != "" and self.IP != str(target):
+                return None
 
+            print("passed")
             # Check if ICMP
             if proto == 1 and 1 in self.protocolList:
                 icmp_type, code, checksum, data = self.icmp_packet(data)
@@ -198,16 +200,17 @@ class Sniffer():
             else:
                 return None
 
-        # elif 0 in self.protocolList:
-        #     self.newDataHolder.addUnsupportedEthernetProtocol(data)
-        #     return self.newDataHolder
-            #printUnsupportedetherentproto
+
+            # elif 0 in self.protocolList:
+            #     self.newDataHolder.addUnsupportedEthernetProtocol(data)
+            #     return self.newDataHolder
+                #printUnsupportedetherentproto
         else:
             return None
 
-        
-        # print(self.newDataHolder.getInfromation())
-        # return self.newDataHolder  
+            
+            # print(self.newDataHolder.getInfromation())
+            # return self.newDataHolder  
             
 
     def unpack_ethernet_frame(self,data):
@@ -264,5 +267,7 @@ class Sniffer():
 
 
 if __name__ == "__main__":
-    myobj = Sniffer([0,1,6,17],"a")
-    myobj.sniffOne()
+    myobj = Sniffer([0,1,6,17],"192.168.112.128")
+    
+    while True:
+        myobj.sniffOne()
