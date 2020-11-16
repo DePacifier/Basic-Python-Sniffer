@@ -82,7 +82,7 @@ class FormattedData():
 
     def printUnsupportedProtocol(self):
         return TAB_1 + "Unsupported Protocol: \n" + '\t   '+ "(only ICMP(1) TCP(6) UDP(17) Accepted)" + TAB_2 + "Protocol Number: " + str(self.proto) + \
-        TAB_2 + 'Data: ' + self.format_multi_line(DATA_TAB_3, self.data) + "\n"
+        TAB_2 + 'Data: ' + str(self.data) + "\n"
 
     def addUnsupportedEthernetProtocol(self, data):
         self.status = -1
@@ -90,7 +90,7 @@ class FormattedData():
 
     def printUnsupportedEthernetProtocol(self):
         return "Unsupported Ethernet Protocol: \n" + "(only IPv4(8) Accepted) \n" + TAB_2 + "Protocol Number: " + str(self.eth_proto) + "\n"  + \
-        TAB_2 + "Data: " + self.format_multi_line(DATA_TAB_3, self.data) + "\n"
+        TAB_2 + "Data: " + str(self.data) + "\n"
 
     def getRepresentation(self):
         try:
@@ -146,16 +146,16 @@ class Sniffer():
 
         print("from sniff One protocols are :", self.protocolList)
         self.status = 1
-        self.connection = socket.socket(socket.AF_PACKET, socket.SOCK_RAW, socket.ntohs(3))
+        # self.connection = socket.socket(socket.AF_PACKET, socket.SOCK_RAW, socket.ntohs(3))
 
-        # self.HOST = socket.gethostbyname(socket.gethostname())
-        # self.connection = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_IP)
-        # # Creating raw socket and binding it to the public interface
-        # self.connection.bind((self.HOST,0))
-        # # Include IP headers
-        # self.connection.setsockopt(socket.IPPROTO_IP, socket.IP_HDRINCL,1)
-        # # Reciveing all packets
-        # self.connection.ioctl(socket.SIO_RCVALL, socket.RCVALL_ON)
+        self.HOST = socket.gethostbyname(socket.gethostname())
+        self.connection = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_IP)
+        # Creating raw socket and binding it to the public interface
+        self.connection.bind((self.HOST,0))
+        # Include IP headers
+        self.connection.setsockopt(socket.IPPROTO_IP, socket.IP_HDRINCL,1)
+        # Reciveing all packets
+        self.connection.ioctl(socket.SIO_RCVALL, socket.RCVALL_ON)
 
         raw_data, addr = self.connection.recvfrom(65536)
         dest_mac, src_mac, eth_proto, data = self.unpack_ethernet_frame(raw_data)
@@ -163,7 +163,7 @@ class Sniffer():
 
         #printEtherenet
         #check if protocol is IPv4 by 8 apparently its 524288,2831155200
-        if eth_proto == 524288:
+        if eth_proto == 2831155200:
             version, header_length, ttl, proto, src, target, data = self.ipv4_packet(data)
             self.newDataHolder.addIPv4Data(version, header_length, ttl, proto, src, target)
             #printIPv4
@@ -193,20 +193,22 @@ class Sniffer():
                 #printUDP
                 
             # Other Types
-            # elif 0 in self.protocolList:
-            #     self.newDataHolder.addUnsupportedProtocol(proto, data)
-            #     return self.newDataHolder
+            elif 0 in self.protocolList:
+                self.newDataHolder.addUnsupportedProtocol(proto, data)
+                print(self.newDataHolder.printUnsupportedProtocol())
+                return self.newDataHolder
                 #printUnsupportedproto
-            else:
-                return None
+            # else:
+            #     return None
 
 
-            # elif 0 in self.protocolList:
-            #     self.newDataHolder.addUnsupportedEthernetProtocol(data)
-            #     return self.newDataHolder
-                #printUnsupportedetherentproto
-        else:
-            return None
+        elif 0 in self.protocolList:
+            self.newDataHolder.addUnsupportedEthernetProtocol(data)
+            print(self.newDataHolder.printUnsupportedEthernetProtocol())
+            return self.newDataHolder
+            #printUnsupportedetherentproto
+        # else:
+        #     return None
 
             
             # print(self.newDataHolder.getInfromation())
