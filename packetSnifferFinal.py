@@ -410,7 +410,7 @@ class Ui_Form(object):
             self.udp_destination_port_2.setText(str(selectedItem.dest_port))
             self.size_2.setText(str(selectedItem.size))
 
-        elif selectedItem.status == 3:
+        if selectedItem.status == 3:
             self.clearFields(3)
             self.tcp_source_port_2.setText(str(selectedItem.src_port))
             self.tcp_destination_port_2.setText(str(selectedItem.dest_port))
@@ -418,7 +418,7 @@ class Ui_Form(object):
             self.acknowledgment_2.setText(str(selectedItem.acknowledgement))
             self.data_2.setPlainText(self.format_multi_line(DATA_TAB, selectedItem.data))
 
-        elif selectedItem.status == 2:
+        if selectedItem.status == 2:
             self.clearFields(2)
             self.type_2.setText(str(selectedItem.icmp_type))
             self.code_2.setText(str(selectedItem.code))
