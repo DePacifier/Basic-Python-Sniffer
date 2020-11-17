@@ -300,8 +300,13 @@ class Ui_Form(object):
         # List that holds every recieved data
         self.sniffedPacketsList = []
 
+        # Setting the IP text to empty string
         self.lineEdit_18.setText("")
 
+        # Initializing a thread holder with 0 for the class
+        self.thread = 0
+
+        
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Simple Packet Sniffer"))
@@ -352,38 +357,74 @@ class Ui_Form(object):
     def addItemToList(self, item):
         self.listWidget.addItem(item)
 
+    def clearFields(self, num):
+        if num == 2:
+            self.tcp_source_port_2.setText("")
+            self.tcp_destination_port_2.setText("")
+            self.sequence_2.setText("")
+            self.acknowledgment_2.setText("")
+            self.udp_source_port_2.setText("")
+            self.udp_destination_port_2.setText("")
+            self.size_2.setText("")
+        
+        elif num == 3:
+            self.type_2.setText("")
+            self.code_2.setText("")
+            self.checksum_2.setText("")
+            self.udp_source_port_2.setText("")
+            self.udp_destination_port_2.setText("")
+            self.size_2.setText("")
+        elif num == 4:
+            self.type_2.setText("")
+            self.code_2.setText("")
+            self.checksum_2.setText("")
+            self.data_2.setPlainText("")
+            self.tcp_source_port_2.setText("")
+            self.tcp_destination_port_2.setText("")
+            self.sequence_2.setText("")
+            self.acknowledgment_2.setText("")
+
+
     def selectItem(self,item):
+
         index = int(item.text()[0]) - 1
         selectedItem = self.sniffedPacketsList[index]
 
-        self.source_mac_2 = selectedItem.src_mac
-        self.destination_mac_2 = selectedItem.dest_mac
-        self.etherent_protocol_2 = selectedItem.eth_proto
+        self.source_mac_2.setText(selectedItem.src_mac)
+        self.destination_mac_2.setText(selectedItem.dest_mac)
+        self.etherent_protocol_2.setText(str(selectedItem.eth_proto))
 
-        self.version_2 = selectedItem.version
-        self.header_length_2 = selectedItem.header_length
-        self.ttl_2 = selectedItem.ttl
-        self.protocol_2 = selectedItem.proto
-        self.source_ip_2 = selectedItem.src
-        self.destination_ip_2 = selectedItem.target
+        self.version_2.setText(str(selectedItem.version))
+        self.header_length_2.setText(str(selectedItem.header_length))
+        self.ttl_2.setText(str(selectedItem.ttl))
+        self.protocol_2.setText(str(selectedItem.proto))
+        self.source_ip_2.setText(selectedItem.src)
+        self.destination_ip_2.setText(selectedItem.target)
 
-        if self.status == 2:
-            self.type_2 = selectedItem.icmp_type
-            self.code_2 = selectedItem.code
-            self.checksum_2 = selectedItem.checksum
+        print("second status in select item")
+        print(selectedItem.status)
+
+        if selectedItem.status == 4:
+            self.clearFields(4)
+            self.udp_source_port_2.setText(str(selectedItem.src_port))
+            self.udp_destination_port_2.setText(str(selectedItem.dest_port))
+            self.size_2.setText(str(selectedItem.size))
+
+        elif selectedItem.status == 3:
+            self.clearFields(3)
+            self.tcp_source_port_2.setText(str(selectedItem.src_port))
+            self.tcp_destination_port_2.setText(str(selectedItem.dest_port))
+            self.sequence_2.setText(str(selectedItem.sequence))
+            self.acknowledgment_2.setText(str(selectedItem.acknowledgement))
             self.data_2.setPlainText(self.format_multi_line(DATA_TAB, selectedItem.data))
 
-        elif self.status == 3:
-            self.tcp_source_port_2 = selectedItem.src_port
-            self.tcp_destination_port_2 = selectedItem.dest_port
-            self.sequence_2 = selectedItem.sequence
-            self.acknowledgment_2 = selectedItem.acknowledgment
+        elif selectedItem.status == 2:
+            self.clearFields(2)
+            self.type_2.setText(str(selectedItem.icmp_type))
+            self.code_2.setText(str(selectedItem.code))
+            self.checksum_2.setText(str(selectedItem.checksum))
             self.data_2.setPlainText(self.format_multi_line(DATA_TAB, selectedItem.data))
 
-        elif self.status == 4:
-            self.udp_source_port_2 = selectedItem.src_port
-            self.udp_destination_port_2 = selectedItem.dest_port
-            self.size_2 = selectedItem.size
 
         # else:
         #     self.data_2.setPlainText(self.format_multi_line("DATA_TAB", selectedItem.data))
@@ -413,17 +454,21 @@ class Ui_Form(object):
 
         if not(len(protocolList) < 1):
             try:
-                self.sniffObj = SnifferClass.Sniffer(protocolList,self.lineEdit_18.text())
+                sniffObj = SnifferClass.Sniffer(protocolList,self.lineEdit_18.text())
                 while self.status:
-                    self.newSniff = self.sniffObj.sniffOne()
-                    if self.newSniff != None:
-                        print(self.newSniff.getRepresentation())
-                        self.sniffedPacketsList.append(self.newSniff)
-                        data = str(len(self.sniffedPacketsList)) + ". " +  self.newSniff.getRepresentation()
+                    newSniff = sniffObj.sniffOne()
+                    if newSniff != None:
+                        # print(self.newSniff.getRepresentation())
+                        print("status")
+                        print(newSniff.status)
+                        self.sniffedPacketsList.append(newSniff)
+                        data = str(len(self.sniffedPacketsList)) + ". " +  newSniff.getRepresentation()
                         print(data)
                         # self.addItemToList(data)
                         self.listWidget.addItem(data)
                         #time.sleep(10)
+
+                sys.exit()
             except Exception as err:
                 print(err)
                 print("Error: unable to start thread")
@@ -431,12 +476,18 @@ class Ui_Form(object):
             print("protocolList length is 0")
 
     def startSniffing(self):
-        threading.Thread(target=self.startSniffingThread, args=()).start()
+        if self.thread == 0:
+            self.thread = threading.Thread(target=self.startSniffingThread, args=())
+            self.thread.start()
+
+        else:
+            pass
             
     def stopSniffing(self):
         print("stop sniffing called")
         self.status = False
         print("value of stop variable is: " + str(self.status))
+        self.thread = 0
 
     def save(self):
         with open("sniffes.txt", "w") as f:
