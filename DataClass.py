@@ -36,7 +36,6 @@ class FormattedData():
 
     def addICMPData(self,icmp_type, code, checksum, data):
         self.status = 2
-        self.type = "ICMP"
         self.icmp_type = icmp_type
         self.code = code
         self.checksum = checksum
@@ -48,7 +47,6 @@ class FormattedData():
 
     def addTCPData(self,src_port, dest_port, sequence, acknowledgement, flag_urg, flag_ack,flag_psh, flag_rst, flag_syn, flag_fin, data):
         self.status = 3
-        self.type = "TCP"
         self.src_port = src_port
         self.dest_port = dest_port
         self.sequence = sequence
@@ -68,7 +66,6 @@ class FormattedData():
 
     def addUDPData(self,src_port, dest_port, size):
         self.status = 4
-        self.type = "UDP"
         self.src_port = src_port
         self.dest_port = dest_port
         self.size = size
@@ -95,9 +92,19 @@ class FormattedData():
 
     def getRepresentation(self):
         try:
-            return '{} \t\t {} \t\t {}'.format(self.proto, self.src, self.target)
+            # 
+            return '{} \t\t {} \t\t {}'.format(self.switchToText(self.proto), self.src, self.target)
         except:
-            return '{} \t\t {} \t\t {}'.format(self.eth_proto, self.src_mac ,self.dest_mac)
+            #                                self.eth_proto
+            return '{} \t\t {} \t\t {}'.format("IPv4", self.src_mac ,self.dest_mac)
+
+    def switchToText(self, num):
+        if num == 1:
+            return "ICMP"
+        elif num == 6:
+            return "TCP"
+        elif num == 17:
+            return "UDP"
 
     def getInformation(self):
         returnStr = self.printEthernetProtocol()

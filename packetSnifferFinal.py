@@ -386,8 +386,8 @@ class Ui_Form(object):
 
 
     def selectItem(self,item):
-
-        index = int(item.text()[0]) - 1
+        text = item.text()
+        index = int(text[:text.find(".")]) - 1
         selectedItem = self.sniffedPacketsList[index]
 
         self.source_mac_2.setText(selectedItem.src_mac)
@@ -410,7 +410,7 @@ class Ui_Form(object):
             self.udp_destination_port_2.setText(str(selectedItem.dest_port))
             self.size_2.setText(str(selectedItem.size))
 
-        if selectedItem.status == 3:
+        elif selectedItem.status == 3:
             self.clearFields(3)
             self.tcp_source_port_2.setText(str(selectedItem.src_port))
             self.tcp_destination_port_2.setText(str(selectedItem.dest_port))
@@ -418,7 +418,7 @@ class Ui_Form(object):
             self.acknowledgment_2.setText(str(selectedItem.acknowledgement))
             self.data_2.setPlainText(self.format_multi_line(DATA_TAB, selectedItem.data))
 
-        if selectedItem.status == 2:
+        elif selectedItem.status == 2:
             self.clearFields(2)
             self.type_2.setText(str(selectedItem.icmp_type))
             self.code_2.setText(str(selectedItem.code))
@@ -464,10 +464,7 @@ class Ui_Form(object):
                         self.sniffedPacketsList.append(newSniff)
                         data = str(len(self.sniffedPacketsList)) + ". " +  newSniff.getRepresentation()
                         print(data)
-                        # self.addItemToList(data)
                         self.listWidget.addItem(data)
-                        #time.sleep(10)
-
                 sys.exit()
             except Exception as err:
                 print(err)
