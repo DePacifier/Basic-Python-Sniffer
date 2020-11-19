@@ -74,7 +74,7 @@ class Sniffer():
             elif proto == self.protocols["udp_protocol"] and constants.udp in self.protocolList:
                 src_port, dest_port, size, data = self.udp_segment(data)
                 self.newDataHolder.addUDPData(src_port, dest_port, size)
-                # print(self.newDataHolder.getInformation())
+                print(self.newDataHolder.getInformation())
                 return self.newDataHolder
                 #printUDP
                 
@@ -86,7 +86,7 @@ class Sniffer():
                 #printUnsupportedproto
             else:
                 self.newDataHolder.addUnsupportedProtocol(proto, data)
-                # print(self.newDataHolder.printUnsupportedProtocol())
+                print(self.newDataHolder.printUnsupportedProtocol())
                 return None
 
 
@@ -100,7 +100,6 @@ class Sniffer():
             # print(self.newDataHolder.printUnsupportedEthernetProtocol())
             return None
 
-            
             # print(self.newDataHolder.getInfromation())
             # return self.newDataHolder  
             

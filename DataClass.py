@@ -92,18 +92,18 @@ class FormattedData():
 
     def getRepresentation(self):
         try:
-            # 
-            return '{} \t\t {} \t\t {}'.format(self.switchToText(self.proto), self.src, self.target)
+            #                                        self.proto
+            return '{} \t\t {} \t\t {}'.format(self.switchToText(self.status), self.src, self.target)
         except:
             #                                self.eth_proto
             return '{} \t\t {} \t\t {}'.format("IPv4", self.src_mac ,self.dest_mac)
 
     def switchToText(self, num):
-        if num == 1:
+        if num == 2:
             return "ICMP"
-        elif num == 6:
+        elif num == 3:
             return "TCP"
-        elif num == 17:
+        elif num == 4:
             return "UDP"
 
     def getInformation(self):
